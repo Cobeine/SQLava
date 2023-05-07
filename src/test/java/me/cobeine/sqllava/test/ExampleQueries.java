@@ -17,19 +17,16 @@ public class ExampleQueries {
     public void examples(ExampleConnection connection) {
 
         connection.prepareStatement(
-                Query.SELECT("test")
-                        .where("id")
-                        .and("uuid")
-                )
+                Query.select("test").where("id").and("uuid"))
                 .setParameter(1,5)
-                .setParameter(2, UUID.randomUUID()
-                ).executeQueryAsync((result, throwable) -> {
+                .setParameter(2, UUID.randomUUID())
+                .executeQueryAsync((result, throwable) -> {
 
                 });
 
         //or
 
-        Query selectQuery = Query.SELECT("table").where("uuid").and("id");
+        Query selectQuery = Query.select("table").where("uuid").and("id");
         PreparedQuery query = selectQuery.prepareStatement(connection);
         query.setParameter(1, UUID.randomUUID()).setParameter(2, 1);
         try {
@@ -43,7 +40,7 @@ public class ExampleQueries {
 
     @Test
     void test() {
-        Query select = Query.INSERT("table").values("id","uuid","kills","deaths","coins");
+        Query select = Query.insert("table").values("id","uuid","kills","deaths","coins");
         System.out.println(select.build());
     }
 
