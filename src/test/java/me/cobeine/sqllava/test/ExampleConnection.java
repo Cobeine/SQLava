@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import me.cobeine.sqllava.connection.Callback;
+import me.cobeine.sqllava.connection.ConnectionResult;
 import me.cobeine.sqllava.connection.SQLConnection;
 import me.cobeine.sqllava.utils.Credentials;
 
@@ -29,9 +30,10 @@ public class ExampleConnection implements SQLConnection {
             openConnection((result, throwable) -> {
                 if (throwable != null) {
                     throwable.printStackTrace();
+                    onConnectionSuccess(ConnectionResult.FAIL);
                     return;
                 }
-                onConnectionSuccess();
+                onConnectionSuccess(ConnectionResult.SUCCESS);
             });
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -62,8 +64,9 @@ public class ExampleConnection implements SQLConnection {
     }
 
     @Override
-    public void onConnectionSuccess() {
-        createTable(new ExampleTable());
+    public void onConnectionSuccess(ConnectionResult result) {
+        if (result.equals(ConnectionResult.SUCCESS))
+            createTable(new ExampleTable());
     }
 
 

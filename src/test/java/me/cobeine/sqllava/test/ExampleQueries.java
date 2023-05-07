@@ -17,7 +17,7 @@ public class ExampleQueries {
     public void examples(ExampleConnection connection) {
 
         connection.prepareStatement(
-                Query.select("test")
+                Query.SELECT("test")
                         .where("id")
                         .and("uuid")
                 )
@@ -29,13 +29,13 @@ public class ExampleQueries {
 
         //or
 
-        Query selectQuery = Query.select("table").where("uuid").and("id");
+        Query selectQuery = Query.SELECT("table").where("uuid").and("id");
         PreparedQuery query = selectQuery.prepareStatement(connection);
         query.setParameter(1, UUID.randomUUID()).setParameter(2, 1);
         try {
             ResultSet set = query.executeQuery();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
 
@@ -43,7 +43,7 @@ public class ExampleQueries {
 
     @Test
     void test() {
-        Query select = Query.insert("table").values("id","uuid","kills","deaths","coins");
+        Query select = Query.INSERT("table").values("id","uuid","kills","deaths","coins");
         System.out.println(select.build());
     }
 

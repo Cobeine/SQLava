@@ -34,16 +34,16 @@ public interface Query {
     }
 
 
-    static SelectQuery select(String from) {
+    static SelectQuery SELECT(String from) {
         return new SelectQuery(from);
     }
-    static DeleteQuery delete(String from) {
+    static DeleteQuery DELETE(String from) {
         return new DeleteQuery(from);
     }
-    static InsertQuery insert(String into) {
+    static InsertQuery INSERT(String into) {
         return new InsertQuery(into);
     }
-    static UpdateQuery update(String into) {
+    static UpdateQuery UPDATE(String into) {
         return new UpdateQuery(into);
     }
 }

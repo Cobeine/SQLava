@@ -22,7 +22,7 @@ public interface SQLConnection {
 
 
     void openConnection(Callback<Integer,Throwable> result) throws ClassNotFoundException;
-    void onConnectionSuccess();
+    void onConnectionSuccess(ConnectionResult result);
 
     ExecutorService getThreadPool();
 
