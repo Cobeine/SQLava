@@ -5,10 +5,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import me.cobeine.sqllava.connection.Callback;
 import me.cobeine.sqllava.connection.ConnectionResult;
+import me.cobeine.sqllava.connection.ConnectionSource;
 import me.cobeine.sqllava.connection.SQLConnection;
 import me.cobeine.sqllava.utils.Credentials;
 
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,10 +30,10 @@ public class ExampleConnection implements SQLConnection {
             openConnection((result, throwable) -> {
                 if (throwable != null) {
                     throwable.printStackTrace();
-                    onConnectionSuccess(ConnectionResult.FAIL);
+                    onResult(ConnectionResult.FAIL);
                     return;
                 }
-                onConnectionSuccess(ConnectionResult.SUCCESS);
+                onResult(ConnectionResult.SUCCESS);
             });
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -42,29 +42,16 @@ public class ExampleConnection implements SQLConnection {
 
     @Override
     public void openConnection(Callback<Integer, Throwable> result) throws ClassNotFoundException {
-            disableLogging();
-            String dataSource = "com.mysql.jdbc.jdbc2.optional.MysqlDataSource";
-            Class.forName(dataSource);
+        disableLogging();
 
-            HikariConfig config = new HikariConfig();
-            Properties properties = new Properties();
-            properties.put("serverName", credentials.getHost());
-            properties.put("port", credentials.getPort());
-            properties.put("databaseName", credentials.getDatabase());
-            properties.put("user", credentials.getUsername());
-            properties.put("password", credentials.getPassword());
+        HikariConfig config = ConnectionSource.HIKARI_DATASOURCE.getBuilder().build(credentials);
 
-            config.setDataSourceClassName(dataSource);
-            config.setDataSourceProperties(properties);
-            config.setLeakDetectionThreshold(2000);
-            config.setConnectionTimeout(8000);
-            config.setMaximumPoolSize(16);
-            this.dataSource = new HikariDataSource(config);
-            result.call(0, null);
+        this.dataSource = new HikariDataSource(config);
+        result.call(0, null);
     }
 
     @Override
-    public void onConnectionSuccess(ConnectionResult result) {
+    public void onResult(ConnectionResult result) {
         if (result.equals(ConnectionResult.SUCCESS))
             createTable(new ExampleTable());
     }

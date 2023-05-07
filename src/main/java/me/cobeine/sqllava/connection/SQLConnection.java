@@ -1,14 +1,12 @@
 package me.cobeine.sqllava.connection;
 
 import com.zaxxer.hikari.HikariDataSource;
-import lombok.extern.java.Log;
 import me.cobeine.sqllava.query.PreparedQuery;
 import me.cobeine.sqllava.query.Query;
 import me.cobeine.sqllava.table.Table;
 import me.cobeine.sqllava.utils.Credentials;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
@@ -22,7 +20,7 @@ public interface SQLConnection {
 
 
     void openConnection(Callback<Integer,Throwable> result) throws ClassNotFoundException;
-    void onConnectionSuccess(ConnectionResult result);
+    void onResult(ConnectionResult result);
 
     ExecutorService getThreadPool();
 
