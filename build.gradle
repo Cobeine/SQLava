@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.1'
     id 'maven-publish'
-
+//    id 'maven'
 
 }
 
@@ -11,7 +11,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
-
+    mavenLocal()
 }
 
 dependencies {
