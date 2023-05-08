@@ -1,6 +1,6 @@
 # <p align="center">SQLava</p>
  <p align="center">A simple & easy to use Java MySQL Query Builder</p>
-I've made this project a while ago in my free time while having exams  & I've decided to publish it to everyone!
+I've made this project a while ago in my free time while having exams & I've decided to publish it to everyone!
 The purpose of this plugin is to make the process of creating a mysql connection & creating quries fun and easy!
 
 ## Installation
