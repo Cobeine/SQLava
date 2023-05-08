@@ -28,10 +28,12 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
 }
+/*
 compileJava {
     sourceCompatibility = '11'
     targetCompatibility = '11'
 }
+*/
 
 shadowJar {
     exclude 'META-INF/**'
