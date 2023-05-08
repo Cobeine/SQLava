@@ -16,7 +16,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.26'
     compileOnly 'org.jetbrains:annotations:23.0.0'
     compileOnly 'org.slf4j:slf4j-jdk14:1.6.0' //2.0.0 fails to bind with SLF4J somehow
-    compileOnly 'com.zaxxer:HikariCP:5.0.1'
+    compileOnly 'com.zaxxer:HikariCP:4.0.3'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
 
     //Testing purposes
