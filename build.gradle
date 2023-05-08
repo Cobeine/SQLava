@@ -39,10 +39,6 @@ compileJava {
 */
 
 shadowJar {
-    setArchiveName("SQLava-$version" + ".jar")
+    println "We have been here UWU"
 }
 apply plugin: 'com.github.johnrengelman.shadow'
-
-test {
-    useJUnitPlatform()
-}
