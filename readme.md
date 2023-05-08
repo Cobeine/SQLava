@@ -55,7 +55,7 @@ dependencies {
 
 ### Examples
 
-For the examples, make sure to check the test source here.
+For the examples, make sure to check the test source <a href="https://github.com/Cobeine/SQLava/tree/master/src/test/java/me/cobeine/sqllava/test">here</a>.
 
 ### Contributing
 
