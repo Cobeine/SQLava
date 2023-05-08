@@ -57,6 +57,6 @@ public enum ConnectionSource {
     private final SourceBuilder builder;
 
     public interface SourceBuilder{
-      HikariConfig build(Credentials credentials) throws ClassNotFoundException;
+      HikariConfig apply(Credentials credentials) throws ClassNotFoundException;
   }
 }

@@ -44,7 +44,7 @@ public class ExampleConnection implements SQLConnection {
     public void openConnection(Callback<Integer, Throwable> result) throws ClassNotFoundException {
         disableLogging();
 
-        HikariConfig config = ConnectionSource.HIKARI_DATASOURCE.getBuilder().build(credentials);
+        HikariConfig config = ConnectionSource.HIKARI_DATASOURCE.getBuilder().apply(credentials);
 
         this.dataSource = new HikariDataSource(config);
         result.call(0, null);

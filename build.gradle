@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.1'
+
 }
 
 group 'me.Cobeine'
@@ -7,6 +9,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+
 }
 
 dependencies {
@@ -22,9 +25,17 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 
-    implementation 'org.slf4j:slf4j-jdk14:1.6.0' //2.0.0 fails to bind with SLF4J somehow
-    implementation 'com.zaxxer:HikariCP:5.0.1'
+    compileOnly 'org.slf4j:slf4j-jdk14:1.6.0' //2.0.0 fails to bind with SLF4J somehow
+    compileOnly 'com.zaxxer:HikariCP:5.0.1'
 }
+
+shadowJar {
+    exclude 'META-INF/**'
+    archiveBaseName.set("")
+    archiveClassifier.set("")
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
+apply plugin: 'com.github.johnrengelman.shadow'
 
 test {
     useJUnitPlatform()
