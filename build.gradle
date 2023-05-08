@@ -39,10 +39,7 @@ compileJava {
 */
 
 shadowJar {
-    exclude 'META-INF/**'
-    archiveBaseName.set("")
-    archiveClassifier.set("")
-    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    setArchiveName("SQLava-$version" + ".jar")
 }
 apply plugin: 'com.github.johnrengelman.shadow'
 
