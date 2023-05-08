@@ -53,7 +53,8 @@ public class ExampleConnection implements SQLConnection {
     @Override
     public void onResult(ConnectionResult result) {
         if (result.equals(ConnectionResult.SUCCESS))
-            createTable(new ExampleTable());
+            createTable(new ExampleTable()); //dropTable(table) too
+
     }
 
 

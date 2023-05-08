@@ -29,8 +29,8 @@ public class ExampleQueries {
         Query selectQuery = Query.select("table").where("uuid").and("id");
         PreparedQuery query = selectQuery.prepareStatement(connection);
         query.setParameter(1, UUID.randomUUID()).setParameter(2, 1);
-        try {
-            ResultSet set = query.executeQuery();
+        try( ResultSet set = query.executeQuery()) {
+            set.getInt("id");//etc
         } catch (SQLException e) {
             e.printStackTrace();
         }
