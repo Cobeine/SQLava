@@ -1,12 +1,11 @@
 # <p align="center">SQLava</p>
  <p align="center">A simple & easy to use Java MySQL Query Builder</p>
-I've made this project a while ago in my free time while having exams  & I've decided to publish it to everyone!
+I've made this project a while ago in my free time while having exams & I've decided to publish it to everyone!
 The purpose of this plugin is to make the process of creating a mysql connection & creating quries fun and easy!
 
 ## Installation
 [![](https://jitpack.io/v/Cobeine/SQLava.svg)](https://jitpack.io/#Cobeine/SQLava)
 <p></p>
-NOTE: Jitpack is not working at the moment & I'm busy to fix it honestly.
 If you're using maven or gradle as a dependency manager then just follow the steps below.
 Otherwise, just download the jar and add it as an artifact dependency.
 
@@ -38,9 +37,9 @@ repositories {
 ###### Maven
 ```xml
 <dependency>
-    <groupId>com.github.cobeine</groupId>
+    <groupId>com.github.Cobeine</groupId>
     <artifactId>SQLava</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-Beta</version>
 </dependency>
 ```
 
@@ -48,7 +47,7 @@ repositories {
 ```groovy
 
 dependencies {
-    implementation 'com.github.cobeine:SQLava:1.0-SNAPSHOT'
+	   implementation 'com.github.Cobeine:SQLava:1.0-Beta'
     //Please note that my library is dependant on Hikrai
     //So, make sure to implement HikariCP in your project.
 }
