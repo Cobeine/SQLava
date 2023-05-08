@@ -6,6 +6,7 @@ The purpose of this plugin is to make the process of creating a mysql connection
 ## Installation
 [![](https://jitpack.io/v/Cobeine/SQLava.svg)](https://jitpack.io/#Cobeine/SQLava)
 <p></p>
+NOTE: Jitpack is not working at the moment & I'm busy to fix it honestly.
 If you're using maven or gradle as a dependency manager then just follow the steps below.
 Otherwise, just download the jar and add it as an artifact dependency.
 
