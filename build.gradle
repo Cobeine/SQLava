@@ -22,7 +22,7 @@ dependencies {
     //Testing purposes
     testCompileOnly 'org.projectlombok:lombok:1.18.26'
     testCompileOnly 'org.jetbrains:annotations:23.0.0'
-    testCompileOnly 'com.zaxxer:HikariCP:5.0.1'
+    testCompileOnly 'com.zaxxer:HikariCP:4.0.3'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
