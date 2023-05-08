@@ -5,6 +5,7 @@ The purpose of this plugin is to make the process of creating a mysql connection
 
 ## Installation
 [![](https://jitpack.io/v/Cobeine/SQLava.svg)](https://jitpack.io/#Cobeine/SQLava)
+<p></p>
 If you're using maven or gradle as a dependency manager then just follow the steps below.
 Otherwise, just download the jar and add it as an artifact dependency.
 
@@ -54,7 +55,7 @@ dependencies {
 
 ### Examples
 
-For the examples, make sure to check the test source here.
+For the examples, make sure to check the test source <a href="https://github.com/Cobeine/SQLava/tree/master/src/test/java/me/cobeine/sqllava/test">here</a>.
 
 ### Contributing
 
