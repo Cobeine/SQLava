@@ -3,6 +3,7 @@ package me.cobeine.sqllava.query.impl;
 import me.cobeine.sqllava.query.Query;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class SelectQuery implements Query {
         return this;
     }
     public SelectQuery column(String... column) {
-        columns.addAll(List.of(column));
+        columns.addAll(Arrays.asList(column));
         return this;
     }
 

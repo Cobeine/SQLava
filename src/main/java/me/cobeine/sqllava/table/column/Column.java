@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class Column {
     }
 
     public Column settings(ColumnSettings... settings) {
-        this.settings = List.of(settings);
+        this.settings = Arrays.asList(settings);
         return this;
     }
 
