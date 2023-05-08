@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'me.Cobeine'
-version '1.0-SNAPSHOT'
+version '1.0-Beta'
 
 repositories {
     mavenCentral()
@@ -31,14 +31,23 @@ dependencies {
 
 }
 
-/*
-compileJava {
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
 }
-*/
-
 shadowJar {
     println "We have been here UWU"
+    archiveBaseName.set("SQLava")
+    archiveClassifier.set("")
 }
+
+
 apply plugin: 'com.github.johnrengelman.shadow'
