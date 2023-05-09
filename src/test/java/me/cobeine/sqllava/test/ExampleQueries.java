@@ -17,19 +17,27 @@ public class ExampleQueries {
     public void examples(ExampleConnection connection) {
 
         connection.prepareStatement(
-                Query.select("test").where("id").and("uuid"))
-                .setParameter(1,5)
+                        Query.select("test").where("id").and("uuid"))
+                .setParameter(1, 5)
                 .setParameter(2, UUID.randomUUID())
-                .executeQueryAsync((result, throwable) -> {
+                .executeQueryAsync(result ->
+                        result.executeIfPresent(resultSet -> {
 
-                });
+                            int id = resultSet.getInt("id"); //examples
+
+                        }).orElse(exception -> {
+
+                            System.out.println(exception);
+
+                        }).apply()
+                );
 
         //or
 
         Query selectQuery = Query.select("table").where("uuid").and("id");
         PreparedQuery query = selectQuery.prepareStatement(connection);
         query.setParameter(1, UUID.randomUUID()).setParameter(2, 1);
-        try( ResultSet set = query.executeQuery()) {
+        try (ResultSet set = query.executeQuery()) {
             set.getInt("id");//etc
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +48,7 @@ public class ExampleQueries {
 
     @Test
     void test() {
-        Query select = Query.insert("table").values("id","uuid","kills","deaths","coins");
+        Query select = Query.insert("table").values("id", "uuid", "kills", "deaths", "coins");
         System.out.println(select.build());
     }
 
