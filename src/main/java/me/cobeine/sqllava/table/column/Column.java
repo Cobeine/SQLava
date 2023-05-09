@@ -17,7 +17,7 @@ public class Column {
     private final @NotNull ColumnType columnType;
     private int size;
     private @NotNull List<ColumnSettings> settings;
-    private String defaultValue = null;
+    private Object defaultValue = null;
 
 
     private Column(@NotNull String name, @NotNull ColumnType type) {
@@ -36,7 +36,7 @@ public class Column {
         return this;
     }
 
-    public Column defaultValue(String defaultValue) {
+    public Column defaultValue(Object defaultValue) {
         this.defaultValue = defaultValue;
         return this;
     }
@@ -61,7 +61,8 @@ public class Column {
             builder.deleteCharAt(builder.length() - 1);
         }
         if (defaultValue != null && !settings.contains(ColumnSettings.AUTO_INCREMENT)) {
-            builder.append(" DEFAULT '").append(defaultValue).append("'");
+            builder.append(" DEFAULT '")
+                    .append((defaultValue instanceof String ? "'" + defaultValue + "'" : defaultValue)).append("'");
         }
         return builder.toString();
     }
