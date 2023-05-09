@@ -44,7 +44,7 @@ publishing {
     }
 }
 shadowJar {
-    println "We have been here UWU"
+    println "We have been here OwO!"
     archiveBaseName.set("SQLava")
     archiveClassifier.set("")
 }
