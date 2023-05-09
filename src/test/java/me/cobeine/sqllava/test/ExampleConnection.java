@@ -27,14 +27,10 @@ public class ExampleConnection implements SQLConnection {
         this.threadPool = Executors.newFixedThreadPool(threads);
         this.credentials = Credentials.defaultCredentials;
         try {
-            openConnection((result, throwable) -> {
-                if (throwable != null) {
-                    throwable.printStackTrace();
-                    onResult(ConnectionResult.FAIL);
-                    return;
-                }
-                onResult(ConnectionResult.SUCCESS);
-            });
+            openConnection(result -> result.executeIfPresent(integer ->
+                            onResult(ConnectionResult.SUCCESS))
+                            .orElse(e -> onResult(ConnectionResult.FAIL))
+                            .apply());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
