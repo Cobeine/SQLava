@@ -18,6 +18,7 @@ import java.sql.Statement;
 public class PreparedQuery {
     SQLConnection sqlConnection;
     PreparedStatement statement;
+    boolean batched;
     public PreparedQuery(@NotNull SQLConnection sqlConnection, @NotNull String buildQuery) {
         this.sqlConnection = sqlConnection;
         try {
@@ -142,11 +143,14 @@ public class PreparedQuery {
             }
         });
     }
-    public void addBatch() throws SQLException {
+    private void addBatch() throws SQLException {
+        if (batched)
+            return;
         if (sqlConnection.getConnection().getAutoCommit()) {
             sqlConnection.getConnection().setAutoCommit(false);
         }
         statement.addBatch();
+        batched = true;
     }
 
     public void addBatch(String s) throws SQLException {
