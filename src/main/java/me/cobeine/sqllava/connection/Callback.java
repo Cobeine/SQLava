@@ -7,11 +7,11 @@ import java.sql.SQLException;
  */
 
 public interface Callback<V , T extends Throwable>{
-    void oncall(QueryResult<V,T> result) throws SQLException;
+    void oncall(QueryHandler<V,T> result) throws SQLException;
 
     default void call(V r, T t) {
         try {
-            oncall(QueryResult.of(r, t));
+            oncall(QueryHandler.of(r, t));
         } catch (Exception e) {
             e.printStackTrace();
         }

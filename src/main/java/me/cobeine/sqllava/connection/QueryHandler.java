@@ -1,7 +1,7 @@
 package me.cobeine.sqllava.connection;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.SQLException;
 import java.util.Optional;
@@ -9,14 +9,16 @@ import java.util.Optional;
 /**
  * @author <a href="https://github.com/Cobeine">Cobeine</a>
  */
-@AllArgsConstructor(staticName = "of")
-public class QueryResult<V, T extends Throwable> {
+@RequiredArgsConstructor(staticName = "of")
+public class QueryHandler<V, T extends Throwable> {
 
     private final V result;
     private final T throwable;
 
     private Executor<T> throwableExecutor;
     private Executor<V> resultExecutor;
+
+
 
     public Optional<V> getResult() {
         return Optional.ofNullable(result);
@@ -26,7 +28,7 @@ public class QueryResult<V, T extends Throwable> {
         return Optional.ofNullable(throwable);
     }
 
-    public QueryResult<V, T> executeIfPresent(Executor<V> executor) {
+    public QueryHandler<V, T> executeIfPresent(Executor<V> executor) {
         this.resultExecutor = executor;
         return this;
     }
@@ -51,7 +53,7 @@ public class QueryResult<V, T extends Throwable> {
         }
     }
 
-    public QueryResult<V, T> orElse(Executor<T> exception) {
+    public QueryHandler<V, T> orElse(Executor<T> exception) {
         this.throwableExecutor = exception;
         return this;
     }
