@@ -1,3 +1,5 @@
+  <p align="center" href="https://www.codefactor.io/repository/github/cobeine/sqlava"><img src="https://www.codefactor.io/repository/github/cobeine/sqlava/badge" alt="CodeFactor" /></p> 
+  
 # <p align="center">SQLava</p>
  <p align="center">A simple & easy to use Java MySQL Query Builder</p>
 I've made this project a while ago in my free time while having exams & I've decided to publish it to everyone!
