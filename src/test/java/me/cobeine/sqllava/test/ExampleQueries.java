@@ -47,8 +47,14 @@ public class ExampleQueries {
     }
 
     @Test
-    void test() {
+    void test(ExampleConnection connection) throws SQLException {
         Query select = Query.insert("table").values("id", "uuid", "kills", "deaths", "coins");
+        Query update = Query.update("table").set("name").and("phone").where("id");
+        connection.prepareStatement(update)
+        .setParameter(1,"john cena")
+        .setParameter(2,"3060692012")
+        .setParameter(3,69)
+        .executeUpdate();
         System.out.println(select.build());
     }
 

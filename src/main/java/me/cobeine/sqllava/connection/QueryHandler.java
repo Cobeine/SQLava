@@ -1,6 +1,5 @@
 package me.cobeine.sqllava.connection;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.sql.SQLException;
@@ -17,7 +16,6 @@ public class QueryHandler<V, T extends Throwable> {
 
     private Executor<T> throwableExecutor;
     private Executor<V> resultExecutor;
-
 
 
     public Optional<V> getResult() {
@@ -71,6 +69,9 @@ public class QueryHandler<V, T extends Throwable> {
 
     public interface Executor<V> {
         void execute(V v) throws SQLException;
+    }
+    public static void main(String[] args){
+
     }
 
 }
