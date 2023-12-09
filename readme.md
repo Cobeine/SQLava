@@ -43,7 +43,7 @@ repositories {
 <dependency>
     <groupId>com.github.Cobeine</groupId>
     <artifactId>SQLava</artifactId>
-    <version>1.0.1-Beta</version>
+    <version>1.5.0-SNAPSHOT</version>
 </dependency>
 ```
 
