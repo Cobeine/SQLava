@@ -1,7 +1,9 @@
 package me.cobeine.sqlava.connection.auth;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +21,9 @@ public class CredentialsRecord {
             if (key.equals(BasicMySQLCredentials.JDBC_URL)) {
                 return null;
             }
+            if (key.equals(BasicMySQLCredentials.MAX_LIFETIME)) {
+                return null;
+            }
             if (key.isProperty()) {
                 throw new IllegalStateException("Key not found: " + key.getKey());
             }
@@ -28,6 +33,10 @@ public class CredentialsRecord {
 
     public static CredentialsRecordBuilder builder() {
         return new CredentialsRecordBuilder();
+    }
+
+    public List<CredentialsKey> keySet() {
+        return new ArrayList<>(record.keySet());
     }
 
     public static class CredentialsRecordBuilder {
