@@ -3,13 +3,13 @@ package me.cobeine.sqlava.connection.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
+import me.cobeine.sqlava.connection.Callback;
 import me.cobeine.sqlava.connection.auth.AuthenticatedConnection;
 import me.cobeine.sqlava.connection.auth.BasicMySQLCredentials;
 import me.cobeine.sqlava.connection.auth.CredentialsKey;
 import me.cobeine.sqlava.connection.auth.CredentialsRecord;
 import me.cobeine.sqlava.connection.database.query.PreparedQuery;
 import me.cobeine.sqlava.connection.database.query.Query;
-import me.cobeine.sqlava.connection.database.query.impl.SelectQuery;
 import me.cobeine.sqlava.connection.database.table.TableCommands;
 import me.cobeine.sqlava.connection.pool.ConnectionPool;
 import me.cobeine.sqlava.connection.pool.PooledConnection;
@@ -38,7 +38,14 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
         logger = Logger.getLogger(this.getClass().getName());
     }
 
-
+    public void connect(Callback<Integer, Exception> callback) {
+        try {
+            connect();
+            callback.call(0,null);
+        }catch (Exception e){
+            callback.call(-1,e);
+        }
+    }
     @Override
     public ConnectionResult connect() {
         HikariConfig config = new HikariConfig();
@@ -47,8 +54,11 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
         if (credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class) != null) {
             config.setJdbcUrl(credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class));
         }
+        if (credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,String.class) != null) {
+            config.setJdbcUrl(credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,String.class));
+        }
 
-        for (CredentialsKey credentialsKey : BasicMySQLCredentials.values()) {
+        for (CredentialsKey credentialsKey : credentialsRecord.keySet()) {
             if (credentialsKey.isProperty()) {
                 config.addDataSourceProperty(credentialsKey.getKey(), credentialsRecord.getProperty(credentialsKey,credentialsKey.getDataType()));
             }
