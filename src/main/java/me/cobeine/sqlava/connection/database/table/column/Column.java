@@ -37,6 +37,9 @@ public class Column {
     }
 
     public Column defaultValue(Object defaultValue) {
+        if (defaultValue instanceof String){
+            defaultValue = "'" + defaultValue + "'";
+        }
         this.defaultValue = defaultValue;
         return this;
     }
@@ -61,8 +64,7 @@ public class Column {
             builder.deleteCharAt(builder.length() - 1);
         }
         if (defaultValue != null && !settings.contains(ColumnSettings.AUTO_INCREMENT)) {
-            builder.append(" DEFAULT '")
-                    .append((defaultValue instanceof String ? "'" + defaultValue + "'" : defaultValue)).append("'");
+            builder.append(" DEFAULT ").append(defaultValue);
         }
         return builder.toString();
     }
