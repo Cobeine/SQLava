@@ -43,7 +43,7 @@ repositories {
 <dependency>
     <groupId>com.github.Cobeine</groupId>
     <artifactId>SQLava</artifactId>
-    <version>1.0.1-Beta</version>
+    <version>1.5.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -51,7 +51,7 @@ repositories {
 ```groovy
 
 dependencies {
-	   implementation 'com.github.Cobeine:SQLava:1.0.1-Beta'
+	   implementation 'com.github.Cobeine:SQLava:1.5.0-SNAPSHOT'
     //Please note that my library is dependant on Hikrai
     //So, make sure to implement HikariCP in your project.
 }
