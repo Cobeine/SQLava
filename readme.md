@@ -57,7 +57,95 @@ dependencies {
 
 ### Examples
 
-For the examples, make sure to check the test source <a href="https://github.com/Cobeine/SQLava/tree/master/src/test/java/me/cobeine/sqllava/test">here</a>.
+#### Connection Examples:
+```java
+public class Test {
+    /**
+     * Connection example
+     * for driver classes @see me.cobeine.sqlava.connection.HikariDataSourcePresets.class
+     */
+    private MySQLConnection connection = new MySQLConnection(CredentialsRecord.builder()
+            .add(BasicMySQLCredentials.DATABASE, "test")
+            .add(BasicMySQLCredentials.HOST, "host")
+            .add(BasicMySQLCredentials.PASSWORD, "password")
+            .add(BasicMySQLCredentials.JDBC_URL, "url") //use JdbcUrlBuilder
+            .build());
+    
+    void methods(){
+        connection.connect();
+        connection.getLogger();
+        connection.getPool();
+        connection.getCredentialsRecord();
+        connection.closeConnection();
+        connection.prepareStatement(); // with args;
+
+        JdbcUrlBuilder.newBuilder()
+                .host("host")
+                .port(3306)
+                .database("test")
+                .setAuto_reconnect(true)
+                .build();
+    }
+    
+}
+
+```
+#### Table Example
+```java 
+
+public class ExampleTable extends Table {
+
+
+    public ExampleTable() {
+        super("example");
+        addColumns(
+                Column.of("id", ColumnType.INT).settings(ColumnSettings.AUTO_INCREMENT, ColumnSettings.UNIQUE),
+                Column.of("uuid", ColumnType.TEXT).settings(ColumnSettings.NOT_NULL, ColumnSettings.UNIQUE).defaultValue("none"),
+                Column.of("name", ColumnType.VARCHAR).size(64).settings(ColumnSettings.NOT_NULL, ColumnSettings.UNIQUE).defaultValue("none"),
+                Column.of("rank", ColumnType.VARCHAR).size(64).settings(ColumnSettings.NOT_NULL).defaultValue("DEFAULT")
+                );
+        setPrimaryKey("id");
+
+    }
+}
+```
+
+#### Query examples
+```java
+public class Examples {
+    public void examples() {
+
+        connection.prepareStatement(
+                        Query.select("test").where("id").and("uuid"))
+                .setParameter(1, 5)
+                .setParameter(2, UUID.randomUUID())
+                .executeQueryAsync(result ->
+                        result.executeIfPresent(resultSet -> {
+
+                            int id = resultSet.getInt("id"); //examples
+
+                        }).orElse(exception -> {
+                            if (exception != null)
+                                exception.printStackTrace();
+                        }).apply()
+                );
+
+        //or
+
+        Query selectQuery = Query.select("table").where("uuid").and("id");
+        PreparedQuery query = selectQuery.prepareStatement(connection);
+        query.setParameter(1, UUID.randomUUID()).setParameter(2, 1);
+        try (ResultSet set = query.executeQuery()) {
+            set.getInt("id");//etc
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+}
+
+```
+
 
 ### Contributing
 
@@ -73,6 +161,7 @@ Before contributing to this project, please note the following:
 
 
 #### <p align="center">Thanks for reading & reviewing my project!</p>
+##### <p align="center"> Special thanks to <a href="https://github.com/AkramLZ">@AkramLZ</a> for inspiration!</p>
 
 
 
