@@ -3,7 +3,7 @@
 <p align="center" href="https://www.codefactor.io/repository/github/cobeine/sqlava"><img src="https://www.codefactor.io/repository/github/cobeine/sqlava/badge" alt="CodeFactor" /></p> 
   
 # <p align="center">SQLava</p>
- <p align="center">A simple & easy to use Java MySQL Query Builder</p>
+ <p align="center">A simple & beginner friendly Java MySQL Query Builder</p>
 I've made this project a while ago in my free time while having exams & I've decided to publish it to everyone!
 The purpose of this plugin is to make the process of creating a mysql connection & creating quries fun and easy!
 
@@ -43,7 +43,7 @@ repositories {
 <dependency>
     <groupId>com.github.Cobeine</groupId>
     <artifactId>SQLava</artifactId>
-    <version>1.5.0-SNAPSHOT</version>
+    <version>{VERSION}</version>
 </dependency>
 ```
 
@@ -51,8 +51,8 @@ repositories {
 ```groovy
 
 dependencies {
-	   implementation 'com.github.Cobeine:SQLava:1.5.0-SNAPSHOT'
-    //Please note that my library is dependant on Hikrai
+	   implementation 'com.github.Cobeine:SQLava:{VERSION}'
+    //Please note that my library is dependant on Hikrai 5.0.1 or above
     //So, make sure to implement HikariCP in your project.
 }
 ```
