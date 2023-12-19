@@ -6,10 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * @author <a href="https://github.com/Cobeine">Cobeine</a>
@@ -17,12 +14,14 @@ import java.sql.Statement;
 
 public class PreparedQuery {
     private final MySQLConnection sqlConnection;
+    private Connection connection;
     private PreparedStatement statement;
     boolean batched;
     public PreparedQuery(@NotNull MySQLConnection sqlConnection, @NotNull String buildQuery) {
         this.sqlConnection = sqlConnection;
         try {
-            this.statement = sqlConnection.getConnection().getConnection().prepareStatement(buildQuery);
+            this.connection = sqlConnection.getConnection().getConnection();
+            this.statement = connection.prepareStatement(buildQuery);
         } catch (SQLException e) {
             sqlConnection.getLogger().severe(String.format("Failed to prepare statement of query '%s': %s", buildQuery, e));
         }
@@ -47,9 +46,9 @@ public class PreparedQuery {
                 statement.close();
             }
 
-            if (sqlConnection.getConnection() != null) {
-                sqlConnection.getConnection().getConnection().commit();
-                sqlConnection.getConnection().close();
+            if (connection != null) {
+                connection.commit();
+                connection.close();
             }
         }
     }
@@ -82,8 +81,8 @@ public class PreparedQuery {
             if (statement != null && !statement.isClosed())
                 statement.close();
 
-            if (sqlConnection.getConnection() != null)
-                sqlConnection.getConnection().close();
+            if (connection != null)
+                connection.close();
 
         }
     }
@@ -102,8 +101,8 @@ public class PreparedQuery {
             if (statement != null)
                 statement.close();
 
-            if (sqlConnection.getConnection() != null)
-                sqlConnection.getConnection().close();
+            if (connection != null)
+                connection.close();
 
         }
     }
@@ -120,8 +119,8 @@ public class PreparedQuery {
             if (statement != null && !statement.isClosed())
                 statement.close();
 
-            if (sqlConnection.getConnection() != null)
-                sqlConnection.getConnection().close();
+            if (connection != null)
+                connection.close();
 
         }
         return rowSet;
@@ -146,8 +145,8 @@ public class PreparedQuery {
     private void addBatch() throws SQLException {
         if (batched)
             return;
-        if (sqlConnection.getConnection().getConnection().getAutoCommit()) {
-            sqlConnection.getConnection().setAutoCommit(false);
+        if (connection.getAutoCommit()) {
+            connection.setAutoCommit(false);
         }
         statement.addBatch();
         batched = true;
@@ -190,7 +189,7 @@ public class PreparedQuery {
     }
     @SuppressWarnings("unused")
     public void rollback() throws SQLException {
-        if (sqlConnection.getConnection() != null)
-            sqlConnection.getConnection().getConnection().rollback();
+        if (connection != null)
+            connection.rollback();
     }
 }
