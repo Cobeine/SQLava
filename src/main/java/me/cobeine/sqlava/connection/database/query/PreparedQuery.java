@@ -32,7 +32,8 @@ public class PreparedQuery {
             if (statement == null)
              return this;
 
-            statement.setObject(index, value);
+            if (value instanceof String) statement.setString(index, (String) value);
+            else statement.setObject(index, value);
         } catch (Exception ignored) {
         }
         return this;
