@@ -126,7 +126,7 @@ public class Examples {
                 .setParameter(2, UUID.randomUUID())
                 .executeQueryAsync(result ->
                         result.executeIfPresent(resultSet -> {
-
+			    resultSet.next(); // or hasNext depending on you
                             int id = resultSet.getInt("id"); //examples
 
                         }).orElse(exception -> {
