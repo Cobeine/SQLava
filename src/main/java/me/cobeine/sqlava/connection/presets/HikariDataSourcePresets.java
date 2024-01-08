@@ -9,16 +9,10 @@ import me.cobeine.sqlava.connection.auth.CredentialsRecord;
 
 public interface HikariDataSourcePresets {
 
-    CredentialsRecord DEFAULT = CredentialsRecord.builder()
-            .add(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, "com.mysql.jdbc.jdbc2.optional.MysqlDataSource")
-            .build();
+    String DATA_SOURCE = ("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
+    String OLD_JDBC = ("com.mysql.jdbc.Driver");
+    String NEW_JDBC = ("com.mysql.cj.jdbc.Driver");
 
-    CredentialsRecord OLD_JDBC = CredentialsRecord.builder()
-            .add(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, "com.mysql.jdbc.Driver")
-            .build();
 
-    CredentialsRecord NEW_JDBC = CredentialsRecord.builder()
-            .add(BasicMySQLCredentials.DATASOURCE_CLASS_NAME,"com.mysql.cj.jdbc.Driver")
-            .build();
 
 }
