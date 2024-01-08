@@ -117,6 +117,9 @@ public class ExampleTable extends Table {
 public class Examples {
     public void examples() {
 
+        Table table = new Table();
+        connection.getTableCommands().createTable(table);
+
         connection.prepareStatement(
                         Query.select("test").where("id").and("uuid"))
                 .setParameter(1, 5)

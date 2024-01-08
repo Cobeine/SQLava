@@ -30,11 +30,11 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
     private final CredentialsRecord credentialsRecord;
     private final Logger logger;
     private HikariDataSource dataSource;
-    private final TableCommands commands;
+    private final TableCommands TableCommands;
 
     public MySQLConnection(CredentialsRecord record) {
         this.credentialsRecord = record;
-        this.commands = new TableCommands(this);
+        this.TableCommands = new TableCommands(this);
         logger = Logger.getLogger(this.getClass().getName());
     }
 
@@ -54,8 +54,8 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
         if (credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class) != null) {
             config.setJdbcUrl(credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class));
         }
-        if (credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,String.class) != null) {
-            config.setJdbcUrl(credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,String.class));
+        if (credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class) != null) {
+            config.setMaxLifetime(credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class));
         }
 
         for (CredentialsKey credentialsKey : credentialsRecord.keySet()) {
