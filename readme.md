@@ -3,9 +3,15 @@
 <p align="center" href="https://www.codefactor.io/repository/github/cobeine/sqlava"><img src="https://www.codefactor.io/repository/github/cobeine/sqlava/badge" alt="CodeFactor" /></p> 
   
 # <p align="center">SQLava</p>
- <p align="center">A simple & beginner friendly Java MySQL Query Builder</p>
-I've made this project a while ago in my free time while having exams & I've decided to publish it to everyone!
-The purpose of this plugin is to make the process of creating a mysql connection & creating quries fun and easy!
+ <p align="center"><b>Streamline MySQL interactions with SQLava, the beginner-friendly query builder for Java!</b></p>
+ <p align="center"><b>Effortlessly construct complex queries with its intuitive syntax, designed for all skill levels</b></p>
+
+## ✨ Key Features:
+
+- <b>Intuitive Query Building:</b>  Craft elegant queries with ease, even without extensive SQL knowledge.
+- <b>Asynchronous Excellence:</b>  Experience lightning-fast performance with asynchronous handling of connections and queries.
+- <b>Beginner-Friendly:</b>  Dive in without hesitation, thanks to its clear and concise syntax.
+- <b>Seamless Integration:</b> Effortlessly incorporate SQLava into your Java projects.
 
 ## Installation
 [![](https://jitpack.io/v/Cobeine/SQLava.svg)](https://jitpack.io/#Cobeine/SQLava)
