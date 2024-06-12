@@ -9,10 +9,6 @@ import me.cobeine.sqlava.connection.auth.CredentialsRecord;
 
 public interface HikariDataSourcePresets {
 
-    String DATA_SOURCE = ("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
-    String OLD_JDBC = ("com.mysql.jdbc.Driver");
-    String NEW_JDBC = ("com.mysql.cj.jdbc.Driver");
-
-
+    String DEFAULT = ("com.mysql.jdbc.jdbc2.optional.MysqlDataSource");
 
 }

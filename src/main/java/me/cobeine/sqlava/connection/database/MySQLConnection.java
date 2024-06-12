@@ -23,8 +23,7 @@ import java.util.logging.Logger;
  * @Author <a href="https://github.com/Cobeine">Cobeine</a>
  */
 @Getter
-public class MySQLConnection implements AuthenticatedConnection<HikariDataSource>,
-        PooledConnection<HikariDataSource, Connection> {
+public class MySQLConnection implements AuthenticatedConnection<HikariDataSource>, PooledConnection<HikariDataSource, Connection>{
 
     private ConnectionPool<HikariDataSource,Connection> pool;
     private final CredentialsRecord credentialsRecord;
@@ -49,15 +48,21 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
     @Override
     public ConnectionResult connect() {
         HikariConfig config = new HikariConfig();
-        config.setDataSourceClassName(credentialsRecord.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, String.class));
-        config.setMaximumPoolSize(credentialsRecord.getProperty(BasicMySQLCredentials.POOL_SIZE, Integer.class));
+        if (credentialsRecord.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME,String.class) != null) {
+            config.setDataSourceClassName(credentialsRecord.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, String.class));
+        }
+        if (credentialsRecord.getProperty(BasicMySQLCredentials.DRIVER, String.class) != null) {
+            config.setDriverClassName(credentialsRecord.getProperty(BasicMySQLCredentials.DRIVER, String.class));
+        }
         if (credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class) != null) {
             config.setJdbcUrl(credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class));
         }
         if (credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class) != null) {
             config.setMaxLifetime(credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class));
         }
-
+        if (credentialsRecord.getProperty(BasicMySQLCredentials.POOL_SIZE,Integer.class) != null) {
+            config.setMaximumPoolSize(credentialsRecord.getProperty(BasicMySQLCredentials.POOL_SIZE, Integer.class));
+        }
         for (CredentialsKey credentialsKey : credentialsRecord.keySet()) {
             if (credentialsKey.isProperty()) {
                 config.addDataSourceProperty(credentialsKey.getKey(), credentialsRecord.getProperty(credentialsKey,credentialsKey.getDataType()));
