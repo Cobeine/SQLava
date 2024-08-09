@@ -70,7 +70,7 @@ dependencies {
 public class Test {
     /**
      * Connection example
-     * for driver classes @see me.cobeine.sqlava.connection.HikariDataSourcePresets.class
+     * for driver classes @see me.cobeine.sqlava.connection.presets.MysqlJDBCDriverPresets;
      */
     private MySQLConnection connection = new MySQLConnection(CredentialsRecord.builder()
             .add(BasicMySQLCredentials.DATABASE, "test")
