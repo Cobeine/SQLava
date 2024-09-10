@@ -72,13 +72,70 @@ public class Test {
      * Connection example
      * for driver classes @see me.cobeine.sqlava.connection.presets.MysqlJDBCDriverPresets;
      */
-    private MySQLConnection connection = new MySQLConnection(CredentialsRecord.builder()
-            .add(BasicMySQLCredentials.DATABASE, "test")
-            .add(BasicMySQLCredentials.HOST, "host")
-            .add(BasicMySQLCredentials.PASSWORD, "password")
-            .add(BasicMySQLCredentials.JDBC_URL, "url") //use JdbcUrlBuilder
-            .build());
-    
+    private MySQLConnection connection;
+    public void examples() {
+        var url = JdbcUrlBuilder.newBuilder()
+                .host("host")
+                .port(3306)
+                .setAuto_reconnect(true)
+                .database("database")
+                .build();
+        CredentialsRecord mysql_creds = CredentialsRecord.builder()
+                .add(BasicMySQLCredentials.USERNAME,"username")
+                .add(BasicMySQLCredentials.PASSWORD,"password")
+                .add(BasicMySQLCredentials.DATABASE,"database")
+                .add(BasicMySQLCredentials.PORT,3306)
+                .add(BasicMySQLCredentials.POOL_SIZE,8)
+                .add(BasicMySQLCredentials.JDBC_URL, url)
+                .build();
+
+        connection = new MySQLConnection(mysql_creds);
+        connection.connect(result -> {
+            if (result.getException().isEmpty()) {
+                result.getException().get().printStackTrace();
+                return;
+            }
+            //successfully connected
+            connection.getTableCommands().createTable(new ExampleTable(),tableResult -> {
+                if (tableResult.getException().isPresent()) {
+                    tableResult.getException().get().printStackTrace();
+                    return;
+                }
+                //successfully created table
+            });
+        });
+
+        PreparedQuery query = connection.prepareStatement("SELECT * FROM example WHERE uuid=test");
+        query = connection.prepareStatement(Query.select("example").where("uuid", "test"));
+
+        query.executeQuery();
+        query.executeQueryAsync(result -> {
+            if (result.getException().isPresent()) {
+                result.getException().get().printStackTrace();
+                return;
+            }
+            //successfully executed query
+            result.getResult().ifPresent(resultSet -> {
+                //...
+            });
+        });
+
+        Query update = Query.update("example").set("uuid","test").where("id",1).and("uuid","test2");
+
+        update = Query.update("example").set("uuid").where("id").where("uuid");
+        connection.prepareStatement(update)
+                .setParameter(1,"test")
+                .setParameter(2,1)
+                .setParameter(3,"test2").executeUpdateAsync(result -> {
+
+                    if (result.getException().isPresent()) {
+                        result.getException().get().printStackTrace();
+                        return;
+                    }
+                    //successfully executed query   
+                });
+    }
+
     void methods(){
         connection.connect();
         connection.getLogger();
@@ -95,16 +152,17 @@ public class Test {
                 .build();
     }
     
+    
 }
 
 ```
 #### Table Example
 ```java 
 
-public class ExampleTable extends Table {
+public class Example extends Table {
 
 
-    public ExampleTable() {
+    public Example() {
         super("example");
         addColumns(
                 Column.of("id", ColumnType.INT).settings(ColumnSettings.AUTO_INCREMENT, ColumnSettings.UNIQUE),
