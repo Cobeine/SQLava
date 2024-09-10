@@ -10,22 +10,24 @@ public final class JdbcUrlBuilder {
 
     public static final String BASE_URL = "jdbc:mysql://%s:%s/%s";
     private boolean auto_reconnect;
-    private final HashMap<String,Object> map;
-     JdbcUrlBuilder() {
-         this.map = new HashMap<>();
-     }
+    private final HashMap<String, Object> map;
+
+    JdbcUrlBuilder() {
+        this.map = new HashMap<>();
+    }
 
     public JdbcUrlBuilder host(String host) {
         map.put("host", host);
         return this;
     }
+
     public JdbcUrlBuilder port(int port) {
         map.put("port", port);
         return this;
     }
 
     public JdbcUrlBuilder database(String database) {
-        map.put("port", database);
+        map.put("database", database);
         return this;
     }
 
