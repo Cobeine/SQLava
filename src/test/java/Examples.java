@@ -3,10 +3,8 @@ import me.cobeine.sqlava.connection.auth.CredentialsRecord;
 import me.cobeine.sqlava.connection.database.MySQLConnection;
 import me.cobeine.sqlava.connection.database.query.PreparedQuery;
 import me.cobeine.sqlava.connection.database.query.Query;
-import me.cobeine.sqlava.connection.database.table.TableCommands;
 import me.cobeine.sqlava.connection.util.JdbcUrlBuilder;
 
-import java.sql.ResultSet;
 
 /**
  * The type Examples.
@@ -38,6 +36,7 @@ public class Examples {
                 return;
             }
             //successfully connected
+            connection.getTableCommands().createTable(new ExampleTable());
             connection.getTableCommands().createTable(new ExampleTable(),tableResult -> {
                 if (tableResult.getException().isPresent()) {
                     tableResult.getException().get().printStackTrace();
