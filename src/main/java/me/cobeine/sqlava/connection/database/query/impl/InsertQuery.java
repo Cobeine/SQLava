@@ -65,11 +65,19 @@ public class InsertQuery implements Query {
             builder.append(" ON DUPLICATE KEY UPDATE ");
 
             String separator = "";
-            for (Map.Entry<String, String> entry : duplicateValues.entrySet()) {
-                String column = entry.getKey();
-                String value = entry.getValue();
-                builder.append(separator).append(column).append("=").append(value);
-                separator = ",";
+            if (duplicateValues.isEmpty()) {
+                String sep = "";
+                for (String s : values.keySet()) {
+                    builder.append(sep).append(s).append("=").append("VALUES(").append(s).append(")");
+                    sep = ", ";
+                }
+            }else {
+                for (Map.Entry<String, String> entry : duplicateValues.entrySet()) {
+                    String column = entry.getKey();
+                    String value = entry.getValue();
+                    builder.append(separator).append(column).append("=").append(value);
+                    separator = ",";
+                }
             }
 
         }
