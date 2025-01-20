@@ -7,7 +7,7 @@ import me.cobeine.sqlava.connection.Callback;
 import me.cobeine.sqlava.connection.auth.AuthenticatedConnection;
 import me.cobeine.sqlava.connection.auth.BasicMySQLCredentials;
 import me.cobeine.sqlava.connection.auth.CredentialsKey;
-import me.cobeine.sqlava.connection.auth.CredentialsRecord;
+import me.cobeine.sqlava.connection.auth.CredentialsHolder;
 import me.cobeine.sqlava.connection.database.query.PreparedQuery;
 import me.cobeine.sqlava.connection.database.query.Query;
 import me.cobeine.sqlava.connection.database.table.TableCommands;
@@ -26,13 +26,13 @@ import java.util.logging.Logger;
 public class MySQLConnection implements AuthenticatedConnection<HikariDataSource>, PooledConnection<HikariDataSource, Connection>{
 
     private ConnectionPool<HikariDataSource,Connection> pool;
-    private final CredentialsRecord credentialsRecord;
+    private final CredentialsHolder credentialsHolder;
     private final Logger logger;
     private HikariDataSource dataSource;
     private final TableCommands TableCommands;
 
-    public MySQLConnection(CredentialsRecord record) {
-        this.credentialsRecord = record;
+    public MySQLConnection(CredentialsHolder record) {
+        this.credentialsHolder = record;
         this.TableCommands = new TableCommands(this);
         logger = Logger.getLogger(this.getClass().getName());
     }
@@ -48,24 +48,24 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
     @Override
     public ConnectionResult connect() {
         HikariConfig config = new HikariConfig();
-        if (credentialsRecord.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME,String.class) != null) {
-            config.setDataSourceClassName(credentialsRecord.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, String.class));
+        if (credentialsHolder.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME,String.class) != null) {
+            config.setDataSourceClassName(credentialsHolder.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, String.class));
         }
-        if (credentialsRecord.getProperty(BasicMySQLCredentials.DRIVER, String.class) != null) {
-            config.setDriverClassName(credentialsRecord.getProperty(BasicMySQLCredentials.DRIVER, String.class));
+        if (credentialsHolder.getProperty(BasicMySQLCredentials.DRIVER, String.class) != null) {
+            config.setDriverClassName(credentialsHolder.getProperty(BasicMySQLCredentials.DRIVER, String.class));
         }
-        if (credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class) != null) {
-            config.setJdbcUrl(credentialsRecord.getProperty(BasicMySQLCredentials.JDBC_URL,String.class));
+        if (credentialsHolder.getProperty(BasicMySQLCredentials.JDBC_URL,String.class) != null) {
+            config.setJdbcUrl(credentialsHolder.getProperty(BasicMySQLCredentials.JDBC_URL,String.class));
         }
-        if (credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class) != null) {
-            config.setMaxLifetime(credentialsRecord.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class));
+        if (credentialsHolder.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class) != null) {
+            config.setMaxLifetime(credentialsHolder.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class));
         }
-        if (credentialsRecord.getProperty(BasicMySQLCredentials.POOL_SIZE,Integer.class) != null) {
-            config.setMaximumPoolSize(credentialsRecord.getProperty(BasicMySQLCredentials.POOL_SIZE, Integer.class));
+        if (credentialsHolder.getProperty(BasicMySQLCredentials.POOL_SIZE,Integer.class) != null) {
+            config.setMaximumPoolSize(credentialsHolder.getProperty(BasicMySQLCredentials.POOL_SIZE, Integer.class));
         }
-        for (CredentialsKey credentialsKey : credentialsRecord.keySet()) {
+        for (CredentialsKey credentialsKey : credentialsHolder.keySet()) {
             if (credentialsKey.isProperty()) {
-                config.addDataSourceProperty(credentialsKey.getKey(), credentialsRecord.getProperty(credentialsKey,credentialsKey.getDataType()));
+                config.addDataSourceProperty(credentialsKey.getKey(), credentialsHolder.getProperty(credentialsKey,credentialsKey.getDataType()));
             }
         }
 

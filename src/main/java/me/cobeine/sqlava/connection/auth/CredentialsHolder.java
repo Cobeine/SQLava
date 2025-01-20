@@ -1,19 +1,16 @@
 package me.cobeine.sqlava.connection.auth;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author <a href="https://github.com/Cobeine">Cobeine</a>
  */
 
-public class CredentialsRecord {
+public class CredentialsHolder {
     private final Map<CredentialsKey,Object> record;
 
-    public CredentialsRecord() {
+    public CredentialsHolder() {
         record = new HashMap<>();
     }
     public <T> T getProperty(CredentialsKey key, Class<T> dataType) {
@@ -30,6 +27,12 @@ public class CredentialsRecord {
         }
         return dataType.cast(record.get(key));
     }
+    public <T> Optional<T> get(CredentialsKey key, Class<T> dataType) {
+        if (!record.containsKey(key)) {
+           return Optional.empty();
+        }
+        return Optional.of(dataType.cast(record.get(key)));
+    }
 
     public static CredentialsRecordBuilder builder() {
         return new CredentialsRecordBuilder();
@@ -41,17 +44,17 @@ public class CredentialsRecord {
 
     public static class CredentialsRecordBuilder {
 
-        private final CredentialsRecord recorder;
+        private final CredentialsHolder recorder;
 
         public CredentialsRecordBuilder() {
-            this.recorder = new CredentialsRecord();
+            this.recorder = new CredentialsHolder();
         }
 
         public CredentialsRecordBuilder add(CredentialsKey key, Object value) {
             recorder.record.put(key, value);
             return this;
         }
-        public CredentialsRecord build() {
+        public CredentialsHolder build() {
             return recorder;
         }
     }

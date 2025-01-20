@@ -1,5 +1,5 @@
 import me.cobeine.sqlava.connection.auth.BasicMySQLCredentials;
-import me.cobeine.sqlava.connection.auth.CredentialsRecord;
+import me.cobeine.sqlava.connection.auth.CredentialsHolder;
 import me.cobeine.sqlava.connection.database.MySQLConnection;
 import me.cobeine.sqlava.connection.database.query.PreparedQuery;
 import me.cobeine.sqlava.connection.database.query.Query;
@@ -20,7 +20,7 @@ public class Examples {
                 .setAuto_reconnect(true)
                 .database("database")
                 .build();
-        CredentialsRecord mysql_creds = CredentialsRecord.builder()
+        CredentialsHolder mysql_creds = CredentialsHolder.builder()
                 .add(BasicMySQLCredentials.USERNAME,"username")
                 .add(BasicMySQLCredentials.PASSWORD,"password")
                 .add(BasicMySQLCredentials.DATABASE,"database")

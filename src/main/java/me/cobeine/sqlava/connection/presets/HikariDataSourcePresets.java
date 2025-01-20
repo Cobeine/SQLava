@@ -1,8 +1,5 @@
 package me.cobeine.sqlava.connection.presets;
 
-import me.cobeine.sqlava.connection.auth.BasicMySQLCredentials;
-import me.cobeine.sqlava.connection.auth.CredentialsRecord;
-
 /**
  * @Author <a href="https://github.com/Cobeine">Cobeine</a>
  */

@@ -8,5 +8,5 @@ import me.cobeine.sqlava.connection.Connection;
 
 public interface AuthenticatedConnection<C> extends Connection<C> {
 
-    CredentialsRecord getCredentialsRecord();
+    CredentialsHolder getCredentialsHolder();
 }
