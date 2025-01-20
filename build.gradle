@@ -6,7 +6,7 @@ plugins {
 }
 
 group 'github.Cobeine'
-version '1.5.7-SNAPSHOT'
+version '1.5.8-SNAPSHOT'
 
 repositories {
     mavenCentral()
