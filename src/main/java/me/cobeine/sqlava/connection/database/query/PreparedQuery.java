@@ -143,14 +143,14 @@ public class PreparedQuery {
             }
         });
     }
-    private void addBatch() throws SQLException {
-        if (batched)
-            return;
-        if (connection.getAutoCommit()) {
-            connection.setAutoCommit(false);
+    public void addBatch() throws SQLException {
+        if (!batched) {
+            if (connection.getAutoCommit()) {
+                connection.setAutoCommit(false);
+            }
+            batched = true;
         }
         statement.addBatch();
-        batched = true;
     }
 
     public void addBatch(String s) throws SQLException {
