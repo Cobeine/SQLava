@@ -5,6 +5,7 @@ import me.cobeine.sqlava.connection.database.table.column.Column;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,11 +18,13 @@ public abstract class Table {
     private final List<Column> columns;
     private String primaryKey;
     private final List<ForeignKey> foreignKeys;
+    private final HashMap<String,String[]> uniqueKeys;
 
     public Table(String name) {
         this.name = name;
         this.columns = new ArrayList<>();
         this.foreignKeys = new ArrayList<>();
+        this.uniqueKeys = new HashMap<>();
     }
 
     public void addColumn(@NotNull Column column) {
@@ -32,6 +35,9 @@ public abstract class Table {
         ForeignKey entry = new ForeignKey(key);
         foreignKeys.add(entry);
         return entry;
+    }
+    public void uniqueKey(String key, String... columns) {
+        uniqueKeys.put(key, columns);
     }
 
     public void addColumns(@NotNull Column... columns) {
@@ -69,6 +75,19 @@ public abstract class Table {
                         builder.append(" ON DELETE ").append(entry.onDelete.name().replace("_"," "));
                     }
                 }
+            }
+        }
+        if (!uniqueKeys.isEmpty()) {
+            for (String key : uniqueKeys.keySet()) {
+                String[] columns = uniqueKeys.get(key);
+                builder.append(", UNIQUE KEY `").append(key).append("` (");
+                for (int i = 0; i < columns.length; i++) {
+                    builder.append("`").append(columns[i]).append("`");
+                    if (i < columns.length - 1) {
+                        builder.append(", ");
+                    }
+                }
+                builder.append(")");
             }
         }
         builder.append(")");
