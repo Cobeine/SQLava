@@ -31,7 +31,7 @@ public abstract class Table {
         this.columns.add(column);
     }
 
-    private ForeignKey foreignKey(String key) {
+    public ForeignKey foreignKey(String key) {
         ForeignKey entry = new ForeignKey(key);
         foreignKeys.add(entry);
         return entry;
