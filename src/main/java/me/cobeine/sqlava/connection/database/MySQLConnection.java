@@ -57,8 +57,8 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
         if (credentialsHolder.getProperty(BasicMySQLCredentials.JDBC_URL,String.class) != null) {
             config.setJdbcUrl(credentialsHolder.getProperty(BasicMySQLCredentials.JDBC_URL,String.class));
         }
-        if (credentialsHolder.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class) != null) {
-            config.setMaxLifetime(credentialsHolder.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Integer.class));
+        if (credentialsHolder.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Long.class) != null) {
+            config.setMaxLifetime(credentialsHolder.getProperty(BasicMySQLCredentials.MAX_LIFETIME,Long.class));
         }
         if (credentialsHolder.getProperty(BasicMySQLCredentials.POOL_SIZE,Integer.class) != null) {
             config.setMaximumPoolSize(credentialsHolder.getProperty(BasicMySQLCredentials.POOL_SIZE, Integer.class));
