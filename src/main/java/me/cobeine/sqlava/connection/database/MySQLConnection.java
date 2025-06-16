@@ -17,6 +17,7 @@ import me.cobeine.sqlava.connection.ConnectionResult;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
@@ -37,7 +38,7 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
         logger = Logger.getLogger(this.getClass().getName());
     }
 
-    public void connect(Callback<Integer, Exception> callback) {
+    public void connectWithFallback(Callback<Integer, Exception> callback) {
         try {
             connect();
             callback.call(0,null);
@@ -45,8 +46,7 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
             callback.call(-1,e);
         }
     }
-    @Override
-    public ConnectionResult connect() {
+    public ConnectionResult connect(Consumer<HikariConfig> consumer) {
         HikariConfig config = new HikariConfig();
         if (credentialsHolder.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME,String.class) != null) {
             config.setDataSourceClassName(credentialsHolder.getProperty(BasicMySQLCredentials.DATASOURCE_CLASS_NAME, String.class));
@@ -63,6 +63,10 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
         if (credentialsHolder.getProperty(BasicMySQLCredentials.POOL_SIZE,Integer.class) != null) {
             config.setMaximumPoolSize(credentialsHolder.getProperty(BasicMySQLCredentials.POOL_SIZE, Integer.class));
         }
+        if (consumer != null) {
+            consumer.accept(config);
+        }
+
         for (CredentialsKey credentialsKey : credentialsHolder.keySet()) {
             if (credentialsKey.isProperty()) {
                 config.addDataSourceProperty(credentialsKey.getKey(), credentialsHolder.getProperty(credentialsKey,credentialsKey.getDataType()));
@@ -81,12 +85,16 @@ public class MySQLConnection implements AuthenticatedConnection<HikariDataSource
                 }
             }
         };
-        try (Connection autoClosable = getPool().resource()) {
+        try (Connection ignored = getPool().resource()) {
             return ConnectionResult.SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
             return ConnectionResult.FAIL;
         }
+    }
+    @Override
+    public ConnectionResult connect() {
+        return connect(null);
     }
 
     public PreparedQuery prepareStatement(Query query) {
