@@ -9,7 +9,8 @@ import java.util.HashMap;
 public final class JdbcUrlBuilder {
 
     public static final String BASE_URL = "jdbc:mysql://%s:%s/%s";
-    private boolean auto_reconnect;
+    private boolean autoReconnect;
+    private boolean autoCreateDatabase;
     private final HashMap<String, Object> map;
 
     JdbcUrlBuilder() {
@@ -25,19 +26,23 @@ public final class JdbcUrlBuilder {
         map.put("port", port);
         return this;
     }
+    public JdbcUrlBuilder autoCreateDatabase(boolean autoCreateDatabase) {
+        this.autoCreateDatabase = autoCreateDatabase;
+        return this;
+    }
 
     public JdbcUrlBuilder database(String database) {
         map.put("database", database);
         return this;
     }
 
-    public JdbcUrlBuilder setAuto_reconnect(boolean auto_reconnect) {
-        this.auto_reconnect = auto_reconnect;
+    public JdbcUrlBuilder setAutoReconnect(boolean auto_reconnect) {
+        this.autoReconnect = auto_reconnect;
         return this;
     }
 
     public String build() {
-        return String.format(BASE_URL, map.get("host"), map.get("port"), map.get("database")) + (auto_reconnect ? "?autoReconnect=true" : "");
+        return String.format(BASE_URL, map.get("host"), map.get("port"), map.get("database")) + (autoReconnect ? "?autoReconnect=true" : "") + (autoCreateDatabase ? "&createDatabaseIfNotExist=true" : "");
     }
 
     public static JdbcUrlBuilder newBuilder() {
