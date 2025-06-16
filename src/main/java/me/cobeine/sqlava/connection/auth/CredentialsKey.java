@@ -14,4 +14,27 @@ public interface CredentialsKey {
     CredentialsKey[] array();
 
     Class<?> getDataType();
+    static CredentialsKey of(String key, Class<?> dataType, boolean property) {
+        return new CredentialsKey() {
+            @Override
+            public String getKey() {
+                return key;
+            }
+
+            @Override
+            public boolean isProperty() {
+                return property;
+            }
+
+            @Override
+            public CredentialsKey[] array() {
+                return new CredentialsKey[]{this};
+            }
+
+            @Override
+            public Class<?> getDataType() {
+                return dataType;
+            }
+        };
+    }
 }
