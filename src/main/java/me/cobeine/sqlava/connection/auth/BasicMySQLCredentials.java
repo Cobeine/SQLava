@@ -12,6 +12,7 @@ public enum BasicMySQLCredentials implements CredentialsKey {
     HOST("serverName", String.class,true),
     PORT("port", Integer.class,true),
     DATABASE("databaseName", String.class,true),
+    TIMEZONE("serverTimezone", String.class,true),
     USERNAME("user", String.class,true),
     PASSWORD("password", String.class,true),
     MAX_LIFETIME("maximumLifetime", Integer.class,true),
