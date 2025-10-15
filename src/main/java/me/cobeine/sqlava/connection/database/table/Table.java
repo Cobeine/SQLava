@@ -80,7 +80,7 @@ public abstract class Table {
         int size = primaryKeys.size();
         for (int i = 0; i < size; i++) {
             builder.append("`").append(primaryKeys.get(i)).append("`");
-            if (i >= size - 1) return;
+            if (i >= size - 1) break;
 
             builder.append(", ");
         }
@@ -97,7 +97,7 @@ public abstract class Table {
             if (entry.referencedColumn == null) continue;
             builder.append(", FOREIGN KEY (`").append(entry.foreignKey).append("`)");
             builder.append(" REFERENCES `").append(entry.referencedTable).append("`(`").append(entry.referencedColumn).append("`)");
-            if (entry.onDelete == null) return;
+            if (entry.onDelete == null) continue;
 
             builder.append(" ON DELETE ").append(entry.onDelete.name().replace("_"," "));
         }
